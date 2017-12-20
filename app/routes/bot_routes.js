@@ -21,12 +21,7 @@ module.exports = {
                 results.forEach(function (result) {
                     let user = yield db.collection('names').findOne({"userId": result._id});
                     console.log("item", user);
-                    if (error) {
-                        console.log("error retrieving user name data ", result._id);
-                        console.log(error);
-                    } else {
-                        resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
-                    }
+                    resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
                 });
                 ctx.reply(resultText);
             }
