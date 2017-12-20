@@ -24,18 +24,19 @@ module.exports = {
                     if (err) {
                         // Die silently
                     } else {
-                        items.aggregate(
-                            [
-                                {
-                                    $group: {
-                                        fromId: "$fromId",
-                                        count: {$count: "$message_id"}
-                                    }
-                                }
-                            ]
-                        ).then((result) => {
-                            console.log(result);
-                        }).catch(() => console.log("error"));
+                        console.log(items);
+                        // items.aggregate(
+                        //     [
+                        //         {
+                        //             $group: {
+                        //                 fromId: "$fromId",
+                        //                 count: {$count: "$message_id"}
+                        //             }
+                        //         }
+                        //     ]
+                        // ).then((result) => {
+                        //     console.log(result);
+                        // }).catch(() => console.log("error"));
                     }
                 });
     }
