@@ -27,9 +27,9 @@ module.exports = {
                         let user = users.find(usr=> usr.userId);
                         resultText = resultText + user.firstName + " " + user.lastName + " : " + result.count;
                     });
-
+                    ctx.reply(resultText);
                 });
-                ctx.reply(resultText);
+
             }
 
         });
