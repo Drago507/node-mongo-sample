@@ -7,7 +7,7 @@ const app            = express();
 const Telegraf = require('telegraf');
 const bot = new Telegraf('133754619:AAHlBmiqFdf3yIl-1RNVmomwVBrY3JSlOvw');
 
-const port = 8000;
+const port = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
