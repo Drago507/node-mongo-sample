@@ -20,6 +20,7 @@ module.exports = {
                 let resultText = "";
                 results.forEach(function (result) {
                     console.log(result);
+                    console.log(result._id);
                     let user = getUserByUserId(result._id, db);
                     resultText = resultText + user.firstName + " " + user.lastName + " : " + result.count;
                 });
