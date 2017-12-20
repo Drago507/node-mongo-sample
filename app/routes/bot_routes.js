@@ -1,5 +1,3 @@
-import * as Q from "express";
-
 var ObjectID = require('mongodb').ObjectID;
 
 module.exports = {
@@ -26,7 +24,7 @@ module.exports = {
                     db.collection('names').findOne({"userId": result._id},{},function(err,user){
                         deferred.resolve(user);
                     });
-                    userPromises.push(deferred.promise.userId);
+                    userPromises.push(deferred.promise);
                 });
                 Q.all(userPromises);
                 userPromises.then((users)=>{
