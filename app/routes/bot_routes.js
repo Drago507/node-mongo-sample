@@ -20,14 +20,9 @@ module.exports = {
                 let resultText = "";
                 let userPromises = [];
                 results.forEach(function (result) {
-                    let deferred = Promise.defer();
-                    db.collection('names').findOne({"userId": result._id}, {}, function (err, user) {
-                        deferred.resolve(user);
-                    });
-                    userPromises.push(deferred.promise);
+                    userPromises.push(getUserByUserId(result._id));
                 });
-                Promise.all(userPromises);
-                userPromises.then((users) => {
+                Promise.all(userPromises).then((users) => {
                     console.log(users);
                 });
                 ctx.reply(resultText);
@@ -87,20 +82,10 @@ function saveMessage(ctx, db) {
 
 function getUserByUserId(userId, db) {
 
-    return {
-        "userId": 110045967,
-        "firstName": "Maryamy",
-        "lastName": null,
-        "username": "hz_maryam"
-    };
-    db.collection('names').findOne({"userId": userId}, function (error, item) {
-        console.log("item", item);
-        if (error) {
-            console.log("error retrieving user name data ", userId);
-            console.log(error);
-        } else {
-            console.log("no error", item);
-            console.log(item);
-        }
+    return new Promise((resolve, reject) => {
+        db.collection('names').findOne({"userId": userId}).then((item) => {
+           resolve(item);
+        });
     })
+
 }
