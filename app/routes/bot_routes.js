@@ -18,11 +18,17 @@ module.exports = {
         ).toArray((err, results) => {
             if (!err) {
                 let resultText = "";
+                let userPromises = [];
                 results.forEach(function (result) {
+                    let deferred = Q.defer();
                     db.collection('names').findOne({"userId": result._id},{},function(err,user){
-                        console.log("item", user);
-                        resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
+                        deferred.resolve(user);
                     });
+                    userPromises.push(deferred.promise.userId);
+                });
+                Q.all(userPromises);
+                userPromises.then((users)=>{
+                    console.log(users);
                 });
                 ctx.reply(resultText);
             }
