@@ -20,14 +20,14 @@ module.exports = {
                 let resultText = "";
                 let userPromises = [];
                 results.forEach(function (result) {
-                    let deferred = Q.defer();
-                    db.collection('names').findOne({"userId": result._id},{},function(err,user){
+                    let deferred = Promise.defer();
+                    db.collection('names').findOne({"userId": result._id}, {}, function (err, user) {
                         deferred.resolve(user);
                     });
                     userPromises.push(deferred.promise);
                 });
-                Q.all(userPromises);
-                userPromises.then((users)=>{
+                Promise.all(userPromises);
+                userPromises.then((users) => {
                     console.log(users);
                 });
                 ctx.reply(resultText);
