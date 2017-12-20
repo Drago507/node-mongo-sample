@@ -3,7 +3,7 @@ var ObjectID = require('mongodb').ObjectID;
 module.exports = {
     addMessage(ctx, db) {
         saveUserNewName(ctx, db);
-        saveMessage(ctx,db);
+        saveMessage(ctx, db);
     },
     getTop(ctx, db) {
         db.collection('messages').aggregate([
@@ -16,9 +16,9 @@ module.exports = {
                 }
             ]
         ).toArray((err, results) => {
-            if(!err){
+            if (!err) {
                 let resultText = "";
-                results.forEach(function(result){
+                results.forEach(function (result) {
                     let user = getUserByUserId(result.fromId);
                     resultText = resultText + user.firstName + " " + user.lastName + " : " + result.count;
                 });
@@ -37,8 +37,9 @@ function saveUserNewName(ctx, db) {
             "lastName": ctx.message.from.last_name,
             "username": ctx.message.from.username
         },
+        {upsert: true},
         (err, result) => {
-
+            console.log(err);
         });
 }
 
@@ -58,8 +59,8 @@ function saveMessage(ctx, db) {
     });
 }
 
-function getUserByUserId(userId,db){
-    db.collection('names').findOne({"userId":userId}).then((item)=>{
+function getUserByUserId(userId, db) {
+    db.collection('names').findOne({"userId": userId}).then((item) => {
         return item;
     })
 }
