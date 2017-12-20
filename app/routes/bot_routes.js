@@ -19,15 +19,14 @@ module.exports = {
             if (!err) {
                 let resultText = "";
                 results.forEach(function (result) {
-                    db.collection('names').findOne({"userId": result._id},function(error,user) {
-                        console.log("item",user);
-                        if (error) {
-                            console.log("error retrieving user name data ", result._id);
-                            console.log(error);
-                        } else {
-                            resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " )+ " : " + result.count + "\n";
-                        }
-                    });
+                    let user = yield db.collection('names').findOne({"userId": result._id});
+                    console.log("item", user);
+                    if (error) {
+                        console.log("error retrieving user name data ", result._id);
+                        console.log(error);
+                    } else {
+                        resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
+                    }
                 });
                 ctx.reply(resultText);
             }
@@ -46,7 +45,6 @@ function saveUserNewName(ctx, db) {
                     "lastName": ctx.message.from.last_name,
                     "username": ctx.message.from.username
                 },
-                {upsert: true},
                 (err, result) => {
                     if (err) {
                         console.log(err);
@@ -93,13 +91,13 @@ function getUserByUserId(userId, db) {
         "lastName": null,
         "username": "hz_maryam"
     };
-    db.collection('names').findOne({"userId": userId},function(error,item) {
-        console.log("item",item);
+    db.collection('names').findOne({"userId": userId}, function (error, item) {
+        console.log("item", item);
         if (error) {
             console.log("error retrieving user name data ", userId);
             console.log(error);
         } else {
-            console.log("no error",item);
+            console.log("no error", item);
             console.log(item);
         }
     })
