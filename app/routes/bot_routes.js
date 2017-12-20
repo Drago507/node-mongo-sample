@@ -25,13 +25,12 @@ module.exports = {
                 Promise.all(userPromises).then((users) => {
                     results.forEach(function (result) {
                         let user = users.find(usr => usr.userId);
+                        console.log(user);
                         resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
                     });
                     ctx.reply(resultText);
                 });
-
             }
-
         });
     }
 };
