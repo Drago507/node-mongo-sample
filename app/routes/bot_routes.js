@@ -19,10 +19,10 @@ module.exports = {
             if (!err) {
                 let resultText = "";
                 results.forEach(function (result) {
-                    db.collection('names').findOne({"userId": userId},function(error,user) {
+                    db.collection('names').findOne({"userId": result._id},function(error,user) {
                         console.log("item",user);
                         if (error) {
-                            console.log("error retrieving user name data ", userId);
+                            console.log("error retrieving user name data ", result._id);
                             console.log(error);
                         } else {
                             resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " )+ " : " + result.count + "\n";
