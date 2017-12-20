@@ -23,7 +23,11 @@ module.exports = {
                     userPromises.push(getUserByUserId(result._id,db));
                 });
                 Promise.all(userPromises).then((users) => {
-                    console.log(users);
+                    results.forEach(function (result) {
+                        let user = users.find(usr=> usr.userId);
+                        resultText = resultText + user.firstName + " " + user.lastName + " : " + result.count;
+                    });
+
                 });
                 ctx.reply(resultText);
             }
