@@ -21,7 +21,7 @@ module.exports = {
                 {$match: {'chatId': ctx.message.chat.id}},
                 {
                     $group: {
-                        fromId: "$fromId",
+                        _id: "$fromId",
                         count: {$count: "$message_id"}
                     }
                 }
