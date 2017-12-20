@@ -25,9 +25,9 @@ module.exports = {
                         count: {$sum: 1}
                     }
                 }
-            ], {}, function (results) {
-                console.log(results)
-            }
-        )
+            ]
+        ).exec((err,results)=>{
+            console.log(results);
+        });
     }
 };
