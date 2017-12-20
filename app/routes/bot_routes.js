@@ -84,6 +84,7 @@ function saveMessage(ctx, db) {
 function getUserByUserId(userId, db) {
 
     db.collection('names').findOne({"userId": parseInt(userId,10)},{},function(error,item) {
+        console.log("item",item);
         if (error) {
             console.log("error retrieving user name data ", userId);
             console.log(error);
