@@ -19,11 +19,15 @@ module.exports = {
             if (!err) {
                 let resultText = "";
                 results.forEach(function (result) {
-                    console.log(result);
-                    console.log(result._id);
-                    let user = getUserByUserId(result._id, db);
-                    console.log(user);
-                    resultText = resultText + user.firstName + " " + user.lastName + " : " + result.count;
+                    db.collection('names').findOne({"userId": userId},function(error,user) {
+                        console.log("item",user);
+                        if (error) {
+                            console.log("error retrieving user name data ", userId);
+                            console.log(error);
+                        } else {
+                            resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " )+ " : " + result.count + "\n";
+                        }
+                    });
                 });
                 ctx.reply(resultText);
             }
@@ -89,14 +93,14 @@ function getUserByUserId(userId, db) {
         "lastName": null,
         "username": "hz_maryam"
     };
-    // db.collection('names').findOne({"userId": userId},function(error,item) {
-    //     console.log("item",item);
-    //     if (error) {
-    //         console.log("error retrieving user name data ", userId);
-    //         console.log(error);
-    //     } else {
-    //         console.log("no error",item);
-    //         console.log(item);
-    //     }
-    // })
+    db.collection('names').findOne({"userId": userId},function(error,item) {
+        console.log("item",item);
+        if (error) {
+            console.log("error retrieving user name data ", userId);
+            console.log(error);
+        } else {
+            console.log("no error",item);
+            console.log(item);
+        }
+    })
 }
