@@ -20,7 +20,7 @@ module.exports = {
                 let resultText = "";
                 let userPromises = [];
                 results.forEach(function (result) {
-                    userPromises.push(getUserByUserId(result._id));
+                    userPromises.push(getUserByUserId(result._id,db));
                 });
                 Promise.all(userPromises).then((users) => {
                     console.log(users);
