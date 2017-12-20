@@ -17,27 +17,17 @@ module.exports = {
         });
     },
     getTop(ctx, db) {
-        db.collection('messages')
-            .find(
-                {'chatId': ctx.message.chat.id}
-                , (err, items) => {
-                    if (err) {
-                        // Die silently
-                    } else {
-                        console.log(items);
-                        // items.aggregate(
-                        //     [
-                        //         {
-                        //             $group: {
-                        //                 fromId: "$fromId",
-                        //                 count: {$count: "$message_id"}
-                        //             }
-                        //         }
-                        //     ]
-                        // ).then((result) => {
-                        //     console.log(result);
-                        // }).catch(() => console.log("error"));
+        db.collection('messages').aggregate([
+                {$match: {'chatId': ctx.message.chat.id}},
+                {
+                    $group: {
+                        fromId: "$fromId",
+                        count: {$count: "$message_id"}
                     }
-                });
+                }
+            ], {}, function (results) {
+                console.log(results)
+            }
+        )
     }
 };
