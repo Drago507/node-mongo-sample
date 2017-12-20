@@ -26,8 +26,8 @@ module.exports = {
                     }
                 }
             ]
-        ).exec((err,results)=>{
-            console.log(results);
+        ).toArray((err,result)=>{
+            console.log(result);
         });
     }
 };
