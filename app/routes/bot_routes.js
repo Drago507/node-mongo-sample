@@ -19,9 +19,10 @@ module.exports = {
             if (!err) {
                 let resultText = "";
                 results.forEach(function (result) {
-                    let user = yield db.collection('names').findOne({"userId": result._id});
-                    console.log("item", user);
-                    resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
+                    db.collection('names').findOne({"userId": result._id},{},function(err,user){
+                        console.log("item", user);
+                        resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
+                    });
                 });
                 ctx.reply(resultText);
             }
