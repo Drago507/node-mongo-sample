@@ -84,13 +84,13 @@ function saveMessage(ctx, db) {
 function getUserByUserId(userId, db) {
     console.log(typeof userId);
     console.log("userId",userId);
-    db.collection('names').findOne({"userId": parseInt(userId,10)},{},function(error,item) {
+    db.collection('names').find({"userId": parseInt(userId,10)},{},function(error,items) {
         if (error) {
             console.log("error retrieving user name data ", userId);
             console.log(error);
         } else {
-            console.log(item);
-            return item;
+            console.log(items);
+            return items;
         }
     })
 }
