@@ -1,3 +1,5 @@
+import * as Q from "express";
+
 var ObjectID = require('mongodb').ObjectID;
 
 module.exports = {
