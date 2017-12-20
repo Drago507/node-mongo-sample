@@ -22,6 +22,7 @@ module.exports = {
                     console.log(result);
                     console.log(result._id);
                     let user = getUserByUserId(result._id, db);
+                    console.log(user);
                     resultText = resultText + user.firstName + " " + user.lastName + " : " + result.count;
                 });
                 ctx.reply(resultText);
