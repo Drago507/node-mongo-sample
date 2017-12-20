@@ -20,12 +20,12 @@ module.exports = {
                 let resultText = "";
                 let userPromises = [];
                 results.forEach(function (result) {
-                    userPromises.push(getUserByUserId(result._id,db));
+                    userPromises.push(getUserByUserId(result._id, db));
                 });
                 Promise.all(userPromises).then((users) => {
                     results.forEach(function (result) {
-                        let user = users.find(usr=> usr.userId);
-                        resultText = resultText + user.firstName + " " + user.lastName + " : " + result.count;
+                        let user = users.find(usr => usr.userId);
+                        resultText = resultText + (user.firstName || " " ) + " " + (user.lastName || " " ) + " : " + result.count + "\n";
                     });
                     ctx.reply(resultText);
                 });
@@ -88,7 +88,7 @@ function getUserByUserId(userId, db) {
 
     return new Promise((resolve, reject) => {
         db.collection('names').findOne({"userId": userId}).then((item) => {
-           resolve(item);
+            resolve(item);
         });
     })
 
