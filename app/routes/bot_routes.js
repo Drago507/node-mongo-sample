@@ -30,17 +30,36 @@ module.exports = {
 };
 
 function saveUserNewName(ctx, db) {
-    db.collection('names').updateOne(
-        {"userId": ctx.message.from.id},
-        {
-            "firstName": ctx.message.from.first_name,
-            "lastName": ctx.message.from.last_name,
-            "username": ctx.message.from.username
-        },
-        {upsert: true},
-        (err, result) => {
-            console.log(err);
-        });
+    db.collection('names').findOne({"userId": ctx.message.from.id}).then((item) => {
+        if (item) {
+            db.collection('names').updateOne(
+                {"userId": ctx.message.from.id},
+                {
+                    "firstName": ctx.message.from.first_name,
+                    "lastName": ctx.message.from.last_name,
+                    "username": ctx.message.from.username
+                },
+                {upsert: true},
+                (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+        } else {
+            db.collection('names').insertOne(
+                {
+                    "userId": ctx.message.from.id,
+                    "firstName": ctx.message.from.first_name,
+                    "lastName": ctx.message.from.last_name,
+                    "username": ctx.message.from.username
+                }, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+        }
+    })
+
 }
 
 function saveMessage(ctx, db) {
