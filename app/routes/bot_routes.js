@@ -22,7 +22,7 @@ module.exports = {
                 {
                     $group: {
                         _id: "$fromId",
-                        count: {$count: 1}
+                        count: {$sum: 1}
                     }
                 }
             ], {}, function (results) {
